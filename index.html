@@ -42,40 +42,55 @@
         background-color: #f76b61;
         color: white;
     }
-    /* https://docs.google.com/spreadsheets/d/e/2PACX-1vRku3u5OdVUUcucb3e6P8SH40bbMNk5-vqmrh1QOsD84v4VvoUUZZF2UfCJfpHW6DloUJYJN83SOzHy/pubhtml?gid=2102300260&single=true */
-    /* https://spreadsheets.google.com/feeds/list/e/2PACX-1vRku3u5OdVUUcucb3e6P8SH40bbMNk5-vqmrh1QOsD84v4VvoUUZZF2UfCJfpHW6DloUJYJN83SOzHy/1/public/values?alt=json */
 </style>
 </head>
 <body>
-  <h1>HEADING</h1>
-  123
-    <div class="results"></div>
-    <h1>BOTTOM</h1>
+  <table id="data-table">
+      <thead>
+          <tr>
+              <th>Time</th>
+              <th>State</th>
+              <th>Name</th>
+              <th>Content</th>
+              <th>Alert</th>
+          </tr>
+      </thead>
+      <tbody></tbody>
+  </table>
     <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
     <script>
-      $(function() {
-  $.get('https://spreadsheets.google.com/feeds/list/e/2PACX-1vRku3u5OdVUUcucb3e6P8SH40bbMNk5-vqmrh1QOsD84v4VvoUUZZF2UfCJfpHW6DloUJYJN83SOzHy/1/public/values?alt=json', function(data) {
-    console.log(data);
-    });
-  });
-    </script>
-    <script>
-      var sheetid = 'e/2PACX-1vRku3u5OdVUUcucb3e6P8SH40bbMNk5-vqmrh1QOsD84v4VvoUUZZF2UfCJfpHW6DloUJYJN83SOzHy',
-          sheetno = 1,
-          dataurl = 'https://spreadsheets.google.com/feeds/list/' + sheetid + '/' + sheetno + '/public/values?alt=json-in-script&callback=?';
+      let sheetid = '19J711yn7jjG4ltwwnD_xGvbaAgdWbsyexyJqGTvjjO8',
+       sheetno = '表單回應',
+       apikey = 'AIzaSyDwgZ2gZWE-B0djHFElvPSndJ7CVe_y1yY',
+       dataurl = 'https://sheets.googleapis.com/v4/spreadsheets/' + sheetid + '/values/' + sheetno + '?alt=json&key=' + apikey;
 
-      $.getJSON(dataurl,
-          function(json) {
-              var e = json.feed.entry,
-                  n = e.length;
-
-              $(e).each(function() {
-                  $('.results').append('<div class="data"><h2>' + this.gsx$title.$t + '</h2><p>' + this.gsx$desc.$t + '</p><span class="dtag">' + this.gsx$tag.$t + '</span></div>');
-              });
-
-
-          }
-      );
+       $.get(dataurl, function(data) {
+        const values = data.values;
+        let items = [];
+        for(var i = 1; i < values.length; i++) {
+          var item = {
+            time: values[i][0],
+            state: values[i][1],
+            name: values[i][2],
+            content: values[i][3],
+            alert: values[i][4]
+          };
+          items.push(item);
+        }
+        // console.table(items);
+        const tableBody = document.querySelector('#data-table tbody');
+        items.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.time}</td>
+                <td>${item.state}</td>
+                <td>${item.name}</td>
+                <td>${item.content}</td>
+                <td>${item.alert}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+      });
   </script>
 </body>
 </html>
