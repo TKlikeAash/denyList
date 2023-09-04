@@ -7,56 +7,215 @@
   <style>
     body {
         font-family: Impact, sans-serif;
-        background: #082f43;
+        background: #31373E;
         color: white;
         padding: 50px;
+    }   
+    .data_table{
+      display: inline-block;
     }
-    
-    h1 {
-        font-size: 60px;
+    .item{
+      display: flex;
+      width: 1000px;
+      height: 250px;
+      border: 6px solid #fff;
+      position: relative;
+      text-decoration: none;
+
+      -moz-border-image: -moz-linear-gradient(top left, #ffffff 0%, #545454 100%);
+      -webkit-border-image: -webkit-linear-gradient(top left, #ffffff 0%, #545454 100%);
+      border-image: linear-gradient(to bottom right, #ffffff 0%, #545454 100%);
+      border-image-slice: 1;
+      transition: .3s;
     }
-    
-    h2 {
-        color: #ffc621;
+    .item:hover{
+      -moz-border-image: -moz-linear-gradient(top left, red 0%, orange 100%);
+      -webkit-border-image: -webkit-linear-gradient(top left, red 0%, orange 100%);
+      border-image: linear-gradient(to bottom right, red 0%, orange 100%);
+      border-image-slice: 1;
+      transition: .3s;
     }
-    
-    .data {
-        background: #0093a0;
-        border-radius: 5px;
-        float: left;
-        margin: 10px;
-        width: 20%;
-        padding: 10px;
-        height: 180px;
-        position: relative;
-        overflow: auto;
+    .mask{
+      width: calc(100% + 12px);
+      height: calc(60px + 6px);
+      position: absolute;
+      background: #ffffff50;
+      pointer-events: none;
+      left: -6px;
+      top: -6px;
     }
-    
-    .dtag {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 15px;
-        padding: 5px 10px;
-        border-radius: 10px;
-        background-color: #f76b61;
-        color: white;
+    .leftBox{
+      display: flex;
+      width: 50%;
+      margin: 20px;
+      border: 6px solid #000;
+      position: relative;
+    }
+    .leftBox::before{
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 20px 20px;
+      border-color: transparent transparent #000 transparent;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    .leftBox::after{
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 23px 23px;
+      border-color: transparent transparent #31373E transparent;
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+    }
+    .dateBlock{
+      width: 50px;
+      height: 100%;
+      background: #000;
+    }
+    .time{
+      height: calc(100% + -50px);
+      background: orange;
+      color: #000;
+      padding: 25px 5px 25px 5px;
+      -webkit-writing-mode: vertical-lr;
+      writing-mode: vertical-lr;
+      font-size: 26.5px;
+      margin: auto 0;
+    }
+    .main{
+      display: flex;
+      flex-direction: column;
+      padding: 5px 20px;
+      border-left-style: solid;
+      border-left-color: #000;
+      border-left-width: 6px;
+    }
+    .typeCn{
+      display: flex;
+      color: #000;
+      font-weight: 600;
+      font-size: 22px;
+    }
+    .highlight{
+      color: orange;
+    }
+    .remark{
+      font-size: 16px;
+      display: flex;
+      align-items: end;
+      margin-left: 5px;
+      margin-bottom: 4px;
+    }
+    .target{
+      font-size: 42px;
+      line-height: 1;
+      color: #fff;
+    }
+    .content{
+      color: #000;
+      font-size: 18px;
+      margin-top: 10px;
+      /* font-weight: 800; */
+      overflow: hidden;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      white-space: normal;
+    }
+    .name{
+      color: #000;
+      text-align: right;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    .rightBox{
+      width: 50%;
+    }
+    .typeEn{
+      height: 50%;
+      color: #000;
+      font-size: 100px;
+      text-align: end;
+      margin-right: 40px;
+    }
+    .secMain{
+      display: flex;
+      width: 100%;
+      height: 50%;
+    }
+    .purp{
+      width: 60%;
+    }
+    .purposeCn{
+      text-align: end;
+      margin-right: 10px;
+      font-size: 48px;
+      font-weight: 600;
+      color: #000;
+    }
+    .purposeEn{
+      text-align: end;
+      margin-right: 10px;
+      font-size: 36px;
+      line-height: 1;
+      color: #000;
+    }
+    .btn{
+      width: 40%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 66px;
+      background: #000;
+      margin: 0px 20px 20px 20px;
+      cursor: pointer;
+      position: relative;
+      transition: .3s;
+      
+    }
+    .btn::before{
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: #00000060;
+      position: absolute;
+      z-index: -1;
+      right: -10px;
+      bottom: -10px;
+      transition: .3s;
+    }
+    .item:hover .btn{
+      transform: translate(5px, 5px);
+    }
+    .item:hover .btn::before{
+      content: "";
+      right: 0px;
+      bottom: 0px;
+    }
+    .btn a{
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .btn a span:nth-child(1){
+      color: #fff;
+    }
+    .btn a span:nth-child(2){
+      color: orange;
     }
 </style>
 </head>
 <body>
-  <table id="data-table">
-      <thead>
-          <tr>
-              <th>Time</th>
-              <th>State</th>
-              <th>Name</th>
-              <th>Content</th>
-              <th>Alert</th>
-          </tr>
-      </thead>
-      <tbody></tbody>
-  </table>
+  <div id="data-table">
+    <div class="data-content"></div>
+    
+  </div>
     <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
     <script>
       let sheetid = '19J711yn7jjG4ltwwnD_xGvbaAgdWbsyexyJqGTvjjO8',
@@ -70,23 +229,62 @@
         for(var i = 1; i < values.length; i++) {
           var item = {
             time: values[i][0],
-            state: values[i][1],
-            name: values[i][2],
+            name: values[i][1],
+            typeCn: values[i][2],
             content: values[i][3],
-            alert: values[i][4]
+            target: values[i][4],
+            postSrc: values[i][5],
+            // 端口6 不使用
+            typeEn: values[i][7],
+            purposeEn: values[i][8],
+            purposeCn: values[i][9],
           };
           items.push(item);
         }
-        // console.table(items);
-        const tableBody = document.querySelector('#data-table tbody');
+        const tableBody = document.querySelector('#data-table .data-content');
         items.forEach(item => {
-            const row = document.createElement('tr');
+            const row = document.createElement('a');
+            row.href = item.postSrc
+            row.classList.add('item')
             row.innerHTML = `
-                <td>${item.time}</td>
-                <td>${item.state}</td>
-                <td>${item.name}</td>
-                <td>${item.content}</td>
-                <td>${item.alert}</td>
+              <div class="leftBox">
+                <div class="dateBlock">
+                  <div class="time">${item.time}</div>
+                </div>
+                <div class="main">
+                  <div class="typeBlock">
+                    <div class="typeCn">
+                      <span class="highlight">${item.typeCn}</span>
+                      <span>此人</span>
+                      <div class="remark">
+                        <span class="highlight">Def</span>
+                        <span>endant</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="target">${item.target}</div>
+                  <div class="content">${item.content}</div>
+                  <div class="submitBlock">
+                    <div class="name">
+                      <span>Submitted by </span>
+                      <span>${item.name}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rightBox">
+                <div class="typeEn">${item.typeEn}</div>
+                <div class="secMain">
+                  <div class="purp">
+                    <div class="purposeCn">${item.purposeCn}</div>
+                    <div class="purposeEn">${item.purposeEn}</div>
+                  </div>
+                  <div class="btn">
+                    <a href="${item.postSrc}"><span>前</span><span>往</span></a>
+                  </div>
+                </div>
+              </div>
+              <div class="mask"></dia>
             `;
             tableBody.appendChild(row);
         });
