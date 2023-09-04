@@ -117,14 +117,6 @@
     .highlight{
       color: orange;
     }
-    .remark{
-      font-size: 18px;
-      display: flex;
-      align-items: end;
-      margin-left: 10px;
-      margin-bottom: 2px;
-      font-family: monospace;
-    }
     .target{
       width: 400px;
       font-size: 38px;
@@ -142,23 +134,26 @@
       color: orange;
     }
     .content{
+      height: 85px;
       color: #000;
       font-size: 18px;
-      margin-top: 10px;
+      margin-top: 5px;
+      margin-bottom: unset;
       font-family: monospace;
       font-weight: 600;
       overflow: hidden;
       display: -webkit-box;
       text-overflow: ellipsis;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       white-space: normal;
+      word-break: break-all;
       transition: .3s;
     }
     .submitBlock{
       color: #000;
       text-align: right;
-      margin-top: 10px;
+      margin-top: 5px;
       font-size: 12px;
       display: flex;
       justify-content: space-between;
@@ -349,14 +344,10 @@
                     <div class="typeCn">
                       <span class="highlight">${item.typeCn}</span>
                       <span>此人</span>
-                      <div class="remark">
-                        <span class="highlight">Def</span>
-                        <span>endant</span>
-                      </div>
                     </div>
                   </div>
                   <div class="target">${item.target}</div>
-                  <div class="content">${item.content}</div>
+                  <p class="content">${item.content}</p>
                   <div class="submitBlock">
                     <div class="keyVal">
                       <span>#${item.keyVal}</span>
