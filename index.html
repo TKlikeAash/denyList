@@ -134,6 +134,7 @@
       color: orange;
     }
     .content{
+      width: 400px;
       height: 85px;
       color: #000;
       font-size: 18px;
@@ -151,11 +152,11 @@
       transition: .3s;
     }
     .submitBlock{
+      display: inline-flex;
       color: #000;
       text-align: right;
       margin-top: 5px;
       font-size: 12px;
-      display: flex;
       justify-content: space-between;
       align-items: end;
       font-family: monospace;
@@ -164,6 +165,17 @@
     }
     .item:hover .submitBlock{
       color: #fff;
+    }
+    .name{
+      display: inline-flex;
+    }
+    .name span:nth-child(2){ 
+      max-width: 80px;
+      margin-left: 5px;
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .rightBox{
       width: 50%;
@@ -303,6 +315,8 @@
             resEn = 'ADMONITION'
           }else if(resEn === '協尋(WANTED)') {
             resEn = 'WANTED'
+          }else {
+            resEn = 'OTHER'
           }
           let resIndex; 
           if( i < 10 ) {
@@ -325,7 +339,6 @@
             purposeCn: values[i][6].slice(0, 4),
             purposeEn: values[i][6].slice(5, -1),
           };
-          console.log(i);
           items.push(item);
         }
         const tableBody = document.querySelector('#data-table .data-content');
@@ -353,7 +366,7 @@
                       <span>#${item.keyVal}</span>
                     </div>
                     <div class="name">
-                      <span>Submitted by </span>
+                      <span>Submitted by</span>
                       <span>${item.name}</span>
                     </div>
                   </div>
