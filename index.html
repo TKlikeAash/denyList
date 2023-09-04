@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>黑單/警告/尋人</title>
   <style>
     body {
         font-family: Impact, sans-serif;
@@ -27,6 +27,9 @@
       border-image: linear-gradient(to bottom right, #ffffff 0%, #545454 100%);
       border-image-slice: 1;
       transition: .3s;
+    }
+    .item:not(:first-child){
+      margin-top: 25px;
     }
     .item:hover{
       -moz-border-image: -moz-linear-gradient(top left, red 0%, orange 100%);
@@ -129,11 +132,14 @@
       -webkit-box-orient: vertical;
       white-space: normal;
     }
-    .name{
+    .submitBlock{
       color: #000;
       text-align: right;
       margin-top: 10px;
       font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
     }
     .rightBox{
       width: 50%;
@@ -227,17 +233,59 @@
         const values = data.values;
         let items = [];
         for(var i = 1; i < values.length; i++) {
+          const date = values[i][0];
+          let calcDate;
+          if(date.includes('上午')){
+            const cleanDateString = date.replace("上午", "");
+            calcDate = new Date(cleanDateString);
+          }else if(date.includes('下午')){
+            const cleanDateString = date.replace("下午", "");
+            const def = new Date(cleanDateString);
+            calcDate = new Date(def.getTime() + 43200000);
+          }
+          const yyyy = calcDate.getFullYear();
+          const m = calcDate.getMonth() + 1;
+          let mm
+          if(m < 10){
+            mm = '0' + m;
+          } else {
+            mm = m
+          }
+          const d = calcDate.getDate();
+          let dd;
+          if(d < 10){
+            dd = '0' + d;
+          } else {
+            dd = d
+          }
+          const h = calcDate.getHours();
+          let hh;
+          if(h < 10){
+            hh = '0' + h;
+          } else {
+            hh = h
+          }
+          // console.log(values[i][2]);
+          let resEn = values[i][2];
+          if(resEn === '黑單') {
+            resEn = 'INFAMOUS'
+          }else if(resEn === '警告') {
+            resEn = 'WARN'
+          }else if(resEn === '協尋') {
+            resEn = 'FIND'
+          }
           var item = {
-            time: values[i][0],
+            index: calcDate.getTime() / 1000,
+            time: yyyy + '-' + mm + dd + '.' + hh,
             name: values[i][1],
             typeCn: values[i][2],
             content: values[i][3],
             target: values[i][4],
             postSrc: values[i][5],
             // 端口6 不使用
-            typeEn: values[i][7],
-            purposeEn: values[i][8],
-            purposeCn: values[i][9],
+            typeEn: resEn,
+            purposeCn: values[i][6].slice(0, 4),
+            purposeEn: values[i][6].slice(5, -1),
           };
           items.push(item);
         }
@@ -265,6 +313,9 @@
                   <div class="target">${item.target}</div>
                   <div class="content">${item.content}</div>
                   <div class="submitBlock">
+                    <div class="indexNum">
+                      <span>#${item.index}</span>
+                    </div>
                     <div class="name">
                       <span>Submitted by </span>
                       <span>${item.name}</span>
