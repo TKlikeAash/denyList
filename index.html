@@ -83,16 +83,20 @@
     .dateBlock{
       width: 50px;
       height: 100%;
-      background: #000;
-    }
-    .time{
-      background: orange;
-      color: #000;
-      padding: 25px 5px 25px 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       -webkit-writing-mode: vertical-lr;
       writing-mode: vertical-lr;
+      background: orange;
       font-size: 26.5px;
-      margin: auto 0;
+      padding: 0 5px;
+    }
+    .day{
+      color: #000;
+    }
+    .time{
+      color: #fff;
     }
     .main{
       display: flex;
@@ -107,21 +111,32 @@
       color: #000;
       font-weight: 600;
       font-size: 22px;
+      font-family: serif;
+      font-weight: 600;
     }
     .highlight{
       color: orange;
     }
     .remark{
-      font-size: 16px;
+      font-size: 18px;
       display: flex;
       align-items: end;
-      margin-left: 5px;
-      margin-bottom: 4px;
+      margin-left: 10px;
+      margin-bottom: 2px;
+      font-family: monospace;
     }
     .target{
-      font-size: 42px;
+      width: 400px;
+      font-size: 38px;
       line-height: 1;
       color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-family: monospace;
+      font-weight: 600;
+      margin-top: 5px;
+      letter-spacing: -2px;
     }
     .item:hover .content{
       color: orange;
@@ -130,7 +145,8 @@
       color: #000;
       font-size: 18px;
       margin-top: 10px;
-      /* font-weight: 800; */
+      font-family: monospace;
+      font-weight: 600;
       overflow: hidden;
       display: -webkit-box;
       text-overflow: ellipsis;
@@ -147,6 +163,8 @@
       display: flex;
       justify-content: space-between;
       align-items: end;
+      font-family: monospace;
+      font-weight: 600;
       transition: .3s;
     }
     .item:hover .submitBlock{
@@ -158,9 +176,9 @@
     .typeEn{
       height: 50%;
       color: #000;
-      font-size: 100px;
+      font-size: 88px;
       text-align: end;
-      margin-right: 40px;
+      margin-right: 10px;
     }
     .secMain{
       display: flex;
@@ -174,6 +192,8 @@
       text-align: end;
       margin-right: 10px;
       font-size: 48px;
+      font-family: monospace;
+      letter-spacing: -5px;
       font-weight: 600;
       color: #000;
     }
@@ -282,12 +302,12 @@
           }
           // console.log(values[i][2]);
           let resEn = values[i][2];
-          if(resEn === '黑單') {
+          if(resEn === '黑單(INFAMOUS)') {
             resEn = 'INFAMOUS'
-          }else if(resEn === '警告') {
-            resEn = 'WARN'
-          }else if(resEn === '協尋') {
-            resEn = 'FIND'
+          }else if(resEn === '警告(ADMONITION)') {
+            resEn = 'ADMONITION'
+          }else if(resEn === '協尋(WANTED)') {
+            resEn = 'WANTED'
           }
           let resIndex; 
           if( i < 10 ) {
@@ -297,10 +317,11 @@
           }
           var item = {
             index: resIndex,
-            time: yyyy + '-' + mm + dd + '.' + hh,
+            day: yyyy + '-' + mm + dd + '.',
+            time: hh,
             keyVal: calcDate.getTime() / 1000,
             name: values[i][1],
-            typeCn: values[i][2],
+            typeCn: values[i][2].slice(0, 2),
             content: values[i][3],
             target: values[i][4],
             postSrc: values[i][5],
@@ -320,7 +341,8 @@
             row.innerHTML = `
               <div class="leftBox">
                 <div class="dateBlock">
-                  <div class="time">${item.time}</div>
+                  <span class="day">${item.day}</span>
+                  <span class="time">${item.time}</span>
                 </div>
                 <div class="main">
                   <div class="typeBlock">
