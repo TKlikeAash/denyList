@@ -220,11 +220,15 @@
       text-decoration: none;
       font-weight: 800;
     }
-    .btn a span:nth-child(1){
-      color: #fff;
+    .btn a > div{
+      unicode-bidi:bidi-override;
+      direction:rtl;
     }
-    .btn a span:nth-child(2){
+    .btn a > div::first-letter{
       color: orange;
+    }
+    .btn a > div{
+      color: #fff;
     }
 </style>
 </head>
@@ -285,9 +289,16 @@
           }else if(resEn === '協尋') {
             resEn = 'FIND'
           }
+          let resIndex; 
+          if( i < 10 ) {
+            resIndex = i + '00';
+          } else if( i < 99 ) {
+            resIndex = i + '0';
+          }
           var item = {
-            index: calcDate.getTime() / 1000,
+            index: resIndex,
             time: yyyy + '-' + mm + dd + '.' + hh,
+            keyVal: calcDate.getTime() / 1000,
             name: values[i][1],
             typeCn: values[i][2],
             content: values[i][3],
@@ -298,6 +309,7 @@
             purposeCn: values[i][6].slice(0, 4),
             purposeEn: values[i][6].slice(5, -1),
           };
+          console.log(i);
           items.push(item);
         }
         const tableBody = document.querySelector('#data-table .data-content');
@@ -324,8 +336,8 @@
                   <div class="target">${item.target}</div>
                   <div class="content">${item.content}</div>
                   <div class="submitBlock">
-                    <div class="indexNum">
-                      <span>#${item.index}</span>
+                    <div class="keyVal">
+                      <span>#${item.keyVal}</span>
                     </div>
                     <div class="name">
                       <span>Submitted by </span>
@@ -342,7 +354,7 @@
                     <div class="purposeEn">${item.purposeEn}</div>
                   </div>
                   <div class="btn">
-                    <a href="${item.postSrc}"><span>前</span><span>往</span></a>
+                    <a href="${item.postSrc}"><div>${item.index}</div></a>
                   </div>
                 </div>
               </div>
