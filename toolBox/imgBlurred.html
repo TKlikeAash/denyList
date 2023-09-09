@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>圖片防盜霧化</title>
   <style>
     #preview canvas{
       width: 100%;
@@ -22,10 +22,9 @@
     const preview = document.getElementById('preview');
     const blurRadiusInput = document.getElementById('blurRadius');
     const blurRadiusValue = document.getElementById('blurRadiusValue');
-    // 添加 input 事件监听器来实时更新模糊效果
     blurRadiusInput.addEventListener('input', function () {
-      blurRadiusValue.textContent = blurRadiusInput.value; // 更新模糊程度的值显示
-      processImage(); // 实时处理并预览图像
+      blurRadiusValue.textContent = blurRadiusInput.value;
+      processImage();
     });
 
     function processImage() {
@@ -38,36 +37,34 @@
           img.src = e.target.result;
 
           img.onload = function () {
-            const blurRadius = parseInt(blurRadiusInput.value); // 获取用户输入的模糊程度
+            const blurRadius = parseInt(blurRadiusInput.value);
             
             // 在这里添加代码来模糊化图片
-            const blurredImage = applyBlurEffect(img, blurRadius); // 使用用户输入的模糊程度
+            const blurredImage = applyBlurEffect(img, blurRadius);
             
             // 创建一个临时链接以便下载图片
             const downloadLink = document.createElement('a');
-            downloadLink.href = blurredImage.toDataURL(); // 将模糊化后的图片转换为数据URL
-            downloadLink.download = 'blurred_image.png'; // 下载文件的名称
+            downloadLink.href = blurredImage.toDataURL();
+            downloadLink.download = 'blurred_image.png';
             downloadLink.textContent = '下載';
             downloadLink.style.display = 'block';
             
-            // 将模糊化后的图片显示在预览中
             preview.innerHTML = '';
             preview.appendChild(blurredImage);
             preview.appendChild(downloadLink);
           };
         };
 
-        reader.readAsDataURL(uploadedImage); // 读取上传的图片
+        reader.readAsDataURL(uploadedImage);
       }
     }
 
     function applyBlurEffect(image, blurRadius) {
-      // 在这里添加代码来模糊化图片，使用用户输入的模糊程度
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
       canvas.width = image.width;
       canvas.height = image.height;
-      context.filter = `blur(${blurRadius}px)`; // 使用用户输入的模糊程度
+      context.filter = `blur(${blurRadius}px)`;
       context.drawImage(image, 0, 0);
       return canvas;
     }
